@@ -1,19 +1,51 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { FirebaseAppProvider, AuthCheck } from 'reactfire';
+import { Home, About, Collection, Gallery, SignIn } from './components';
+import './style.css';
+// import { firebaseConfig } from './firebaseConfig';
+import 'firebase/auth';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
+import { Contact } from './components/Contact';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-root.render(
+
+const my_title = "Live Free and Ride On!!!"
+
+ReactDOM.render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    {/* <FirebaseAppProvider firebaseConfig={firebaseConfig} suspense={true}> */}
+    <Provider store={store}>
+    <Router>
+      <Switch>
+
+      <Route exact path="/">
+          <Home title={my_title}/>
+        </Route>
+        <Route path='/Collection'>
+          <Collection></Collection>
+        </Route> 
+        <Route path='/Contact'>
+          <Contact></Contact>
+        </Route>
+        <Route path='/About'>
+          <About></About>
+          </Route>
+        <Route path='/SignIn'>
+          <SignIn></SignIn>
+        </Route>
+        <Route path='/Gallery'>
+          <Gallery></Gallery>
+        </Route>  
+
+
+      </Switch>
+    </Router>
+    </Provider>
+    {/* </FirebaseAppProvider> */}
+  </React.StrictMode>,
+  document.getElementById('root')
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+
